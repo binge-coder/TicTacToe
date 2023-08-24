@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square border border-black float-left text-lg font-bold h-9 w-9 mr-1 mt-1 p-0 text-center " onClick={onSquareClick}>
+    <button className="square border border-black float-left text-lg font-bold h-9 w-9 mr-1 mt-1 p-0 text-center bg-white" onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -150,14 +150,14 @@ export default function Game() {
     }
     return (
       <li key={move}>
-        <button onClick={() => setCurrentMove(move)}>{description}</button>
+        <button className="border border-black rounded-sm m-1 px-2" onClick={() => setCurrentMove(move)}>{description}</button>
       </li>
     );
   });
 
   return (
     // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
-    <div className="game flex flex-row border border-black items-center h-screen w-screen justify-center ">
+    <div className="game flex flex-row border border-black items-center h-screen w-screen justify-center bg-slate-200">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
