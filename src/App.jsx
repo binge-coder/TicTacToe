@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square border border-black float-left text-lg font-bold h-9 w-9 mr-1 mt-1 p-0 text-center bg-white" onClick={onSquareClick}>
+    <button className="square border border-black text-lg font-bold h-9 w-9 p-0 text-center bg-white hover:border-4 active:bg-slate-500" onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -36,20 +36,15 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'No winner yet';
   }
   return (
-    <>
-
-      <div className="status mb-2">{status}</div>
-      <div className="board-row">
+    <><div className='text-bold text-lg text-center mt-3'>Status</div>
+      <div className="status mb-2 underline underline-offset-4 text-center">{status}</div>
+      <div className="grid grid-cols-3 gap-1 m-5">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
         <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
         <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
         <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
         <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
         <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
@@ -150,18 +145,19 @@ export default function Game() {
     }
     return (
       <li key={move}>
-        <button className="border border-black rounded-sm m-1 px-2" onClick={() => setCurrentMove(move)}>{description}</button>
+        <button className="border border-black rounded-sm m-1 px-2 hover:bg-white" onClick={() => setCurrentMove(move)}>{description}</button>
       </li>
     );
   });
 
   return (
     // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
-    <div className="game flex flex-row border border-black items-center h-screen w-screen justify-center bg-slate-200">
-      <div className="game-board">
+    <div className="game flex flex-col border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row flex-col-reverse">
+      <div className="game-board border rounded-md border-black w-40 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="game-info ml-4">
+      <div className="game-info border rounded-md border-black h-100 pt-1 px-2">
+        <p className='font-bold text-center'>History</p>
         <ol>{moves}</ol>
       </div>
     </div>
