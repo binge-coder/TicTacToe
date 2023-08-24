@@ -36,9 +36,9 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'No winner yet';
   }
   return (
-    <><div className='text-bold text-lg text-center mt-3'>Status</div>
-      <div className="status mb-2 underline underline-offset-4 text-center">{status}</div>
-      <div className="grid grid-cols-3 gap-1 m-5">
+    <><div className='font-bold text-center'>Play Here</div>
+
+      <div className="grid grid-cols-3 gap-1 mx-5 my-2">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
         <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
@@ -49,6 +49,7 @@ function Board({ xIsNext, squares, onPlay }) {
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
+      <div className="status mb-2 underline underline-offset-4 text-center">{status}</div>
     </>
   );
 }
@@ -152,7 +153,7 @@ export default function Game() {
 
   return (
     // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
-    <div className="game flex border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row flex-col-reverse">
+    <div className="game flex flex-col border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row ">
       <div className="game-board border rounded-md border-black w-40 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
