@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square border border-black text-lg font-bold h-9 w-9 p-0 text-center bg-white hover:border-4 active:bg-slate-500" onClick={onSquareClick}>
+    <button className="square border border-black text-lg font-bold h-12 w-12 p-0 text-center bg-white hover:border-4 active:bg-slate-500" onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -154,7 +154,7 @@ export default function Game() {
   return (
     // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
     <div className="game flex flex-col border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row ">
-      <div className="game-board border rounded-md border-black w-40 ">
+      <div className="game-board border rounded-md border-black w-50 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info border rounded-md border-black h-100 pt-1 px-2">
