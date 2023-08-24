@@ -152,7 +152,7 @@ export default function Game() {
 
   return (
     // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
-    <div className="game flex flex-col border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row flex-col-reverse">
+    <div className="game flex border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row flex-col-reverse">
       <div className="game-board border rounded-md border-black w-40 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
