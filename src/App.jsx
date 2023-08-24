@@ -36,8 +36,8 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'No winner yet';
   }
   return (
-    <><div className='font-bold text-center'>Play Here</div>
-
+    <>
+      <div className='font-bold text-center mt-2'>Play Here</div>
       <div className="grid grid-cols-3 gap-1 mx-5 my-2">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
