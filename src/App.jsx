@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className="square border border-black float-left text-lg font-bold h-9 w-9 mr-1 mt-1 p-0 text-center " onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -38,7 +38,7 @@ function Board({ xIsNext, squares, onPlay }) {
   return (
     <>
 
-      <div className="status">{status}</div>
+      <div className="status mb-2">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -75,7 +75,7 @@ export default function Game() {
   function findBestMove(squares) {
     let bestScore = -Infinity;
     let bestMove;
-  
+
     for (let i = 0; i < squares.length; i++) {
       if (squares[i] === null) {
         squares[i] = 'O';
@@ -87,7 +87,7 @@ export default function Game() {
         }
       }
     }
-  
+
     return bestMove;
   }
 
@@ -102,7 +102,7 @@ export default function Game() {
     if (squares.indexOf(null) === -1) {
       return 0;
     }
-  
+
     if (isMaximizing) {
       let maxScore = -Infinity;
       for (let i = 0; i < squares.length; i++) {
@@ -156,14 +156,16 @@ export default function Game() {
   });
 
   return (
-    <div className="game">
+    // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
+    <div className="game flex flex-row border border-black items-center h-screen w-screen justify-center ">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="game-info">
+      <div className="game-info ml-4">
         <ol>{moves}</ol>
       </div>
     </div>
+    // </div>
   );
 }
 
