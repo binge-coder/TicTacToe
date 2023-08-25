@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Footer from './components/Footer';
 
 function Square({ value, onSquareClick }) {
   return (
@@ -152,17 +153,19 @@ export default function Game() {
   });
 
   return (
-    // <div className='flex flex-row border border-green-500 h-screen w-screen justify-center'>
-    <div className="game flex flex-col border-4 border-black h-screen w-screen justify-center items-center gap-6 bg-slate-200 md:flex-row ">
-      <div className="game-board border rounded-md border-black w-50 ">
+    <>
+    <div className="game flex flex-col w-screen h-screen justify-evenly items-center gap-6 bg-slate-200 md:flex-row ">
+      <div className="game-board border rounded-md border-black w-50 mt-6">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="game-info border rounded-md border-black h-100 pt-1 px-2">
+      <div className="game-info border rounded-md border-black h-100 pt-1 px-2 mb-6">
         <p className='font-bold text-center'>History</p>
         <ol>{moves}</ol>
       </div>
     </div>
-    // </div>
+    <Footer></Footer>
+    </>
+    
   );
 }
 
