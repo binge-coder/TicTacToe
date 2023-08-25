@@ -154,7 +154,7 @@ export default function Game() {
 
   return (
     <>
-    <div className="game flex flex-col w-screen h-screen justify-evenly items-center gap-6 bg-slate-200 md:flex-row ">
+    <div className="game flex flex-col h-screen justify-evenly items-center gap-6 bg-slate-200 md:flex-row ">
       <div className="game-board border rounded-md border-black w-50 mt-6">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
