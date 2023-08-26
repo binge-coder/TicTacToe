@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 
 function Square({ value, onSquareClick }) {
   return (
@@ -153,18 +154,22 @@ export default function Game() {
   });
 
   return (
-    <>
-    <div className="game flex flex-col h-screen justify-evenly items-center gap-6 bg-slate-200 md:flex-row ">
-      <div className="game-board border rounded-md border-black w-50 mt-6">
+    // <div className='flex flex-col h-screen border-2 border-green-500'>
+    <div className='flex flex-col min-h-screen border-2 border-green-500'>
+
+    <Navbar></Navbar>
+    <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row border-2 border-red-500">
+      <div className="border rounded-md border-black w-50 mt-6">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="game-info border rounded-md border-black h-100 pt-1 px-2 mb-6">
+      <div className=" border rounded-md border-black h-100 pt-1 px-2 mb-6"> 
+      {/* game-history */}
         <p className='font-bold text-center'>History</p>
         <ol>{moves}</ol>
       </div>
     </div>
     <Footer></Footer>
-    </>
+    </div>
     
   );
 }
