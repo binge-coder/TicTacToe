@@ -162,12 +162,32 @@ export default function Game() {
       <div className="border rounded-md border-black w-50 mt-6">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className=" border rounded-md border-black h-100 pt-1 px-2 mb-6"> 
+      <div className=" border rounded-md border-black h-100 pt-1 px-2 m-3"> 
       {/* game-history */}
         <p className='font-bold text-center'>History</p>
         <ol>{moves}</ol>
       </div>
     </div>
+    {/* <div>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, quod. Odio vero, repellendus ex repellat voluptate ratione quaerat perspiciatis illo nulla, repudiandae natus id! Labore maiores dolor deleniti dolore a?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, quod. Odio vero, repellendus ex repellat voluptate ratione quaerat perspiciatis illo nulla, repudiandae natus id! Labore maiores dolor deleniti dolore a?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, quod. Odio vero, repellendus ex repellat voluptate ratione quaerat perspiciatis illo nulla, repudiandae natus id! Labore maiores dolor deleniti dolore a?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, quod. Odio vero, repellendus ex repellat voluptate ratione quaerat perspiciatis illo nulla, repudiandae natus id! Labore maiores dolor deleniti dolore a?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, quod. Odio vero, repellendus ex repellat voluptate ratione quaerat perspiciatis illo nulla, repudiandae natus id! Labore maiores dolor deleniti dolore a?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, quod. Odio vero, repellendus ex repellat voluptate ratione quaerat perspiciatis illo nulla, repudiandae natus id! Labore maiores dolor deleniti dolore a?
+      </p>
+    </div> */}
     <Footer></Footer>
     </div>
     
