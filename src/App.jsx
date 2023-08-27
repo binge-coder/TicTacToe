@@ -161,10 +161,10 @@ export default function Game() {
 
   return (
     // <div className='flex flex-col h-screen border-2 border-green-500'>
-    <div className={`flex flex-col min-h-screen border-2 border-green-500 ${darkmode?'dark':''}`}>
+    <div className={`flex flex-col min-h-screen ${darkmode?'dark':''}`}>
 
     <Navbar darkmode = {darkmode} toggleDarkMode = {toggleDarkMode}/>
-    <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row border-2 border-red-500 dark:bg-slate-800">
+    <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row dark:bg-slate-800">
       <div className="border-2 rounded-md w-50 mt-6 shadow-md border-black dark:border-white">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
