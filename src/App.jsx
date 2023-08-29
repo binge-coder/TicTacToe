@@ -55,7 +55,7 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
       <div className="mb-2 underline underline-offset-4 text-center">{status}</div>
-      <button onClick={handleRestart} className='flex flex-row justify-center border-2 border-slate-500 hover:bg-slate-400 w-full gap-1 p-1 shadow-xl'>Restart
+      <button onClick={handleRestart} className='flex flex-row justify-center border-2 border-slate-500 hover:bg-slate-400 w-full gap-1 p-1'>Restart
         <IconContext.Provider value={{ size: 23 }}>
           <VscDebugRestart></VscDebugRestart>
         </IconContext.Provider>
