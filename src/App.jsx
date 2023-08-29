@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square border border-black text-lg font-bold h-12 w-12 p-0 text-center bg-white hover:border-4 active:bg-slate-500 dark:bg-slate-800 dark:border-white" onClick={onSquareClick}>
+    <button className="square border border-black text-lg font-bold h-12 w-12 p-0 text-center bg-[#b8c1ec] hover:border-4 active:bg-slate-500 dark:bg-slate-800 dark:border-white shadow-lg" onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -149,7 +149,7 @@ export default function Game() {
     }
     return (
       <li key={move}>
-        <button className="border border-black bg-slate-600 text-white dark:border-white dark:hover:bg-slate-800 rounded-sm m-1 px-2 hover:bg-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
+        <button className="border border-black bg-[#b8c1ec] text-[#232946]  dark:hover:bg-slate-800 rounded-sm m-1 px-2 hover:bg-slate-400 shadow-lg dark:bg-transparent dark:text-white dark:border-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
       </li>
     );
   });
@@ -165,10 +165,10 @@ export default function Game() {
 
     <Navbar darkmode = {darkmode} toggleDarkMode = {toggleDarkMode}/>
     <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row dark:bg-slate-800">
-      <div className="border-2 rounded-md w-50 mt-6 shadow-md border-black dark:border-white">
+      <div className="border-2 rounded-md w-50 mt-6 shadow-2xl border-black dark:border-slate-600">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className=" border-2 rounded-md shadow-md border-black dark:border-white h-100 pt-1 px-2 m-3"> 
+      <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3"> 
       {/* game-history */}
         <p className='font-bold text-center'>History</p>
         <ol>{moves}</ol>
