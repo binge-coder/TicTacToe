@@ -28,33 +28,29 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
   }
 
   const winner = calculateWinner(squares);
-  let status;
+  let gameStatus;
   // if (winner) {
-  //   status = 'Winner: ' + winner;
+  //   gameStatus = 'Winner: ' + winner;
   // } else {
-  //   status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  //   gameStatus = 'Next player: ' + (xIsNext ? 'X' : 'O');
   // }
   if (winner) {
-    status = 'Winner: ' + winner + ' (computer)';
+    gameStatus = 'Winner: ' + winner + ' (computer)';
   }
   else {
-    status = 'No winner yet';
+    gameStatus = 'No winner yet';
   }
+  let sqRange = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
   return (
     <>
       <div className='font-bold text-center mt-2'>Play Here</div>
       <div className="grid grid-cols-3 gap-1 mx-5 my-2">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+      {sqRange.map((index) => (
+    <Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />
+  ))}
       </div>
-      <div className="mb-2 underline underline-offset-4 text-center">{status}</div>
+      <div className="mb-2 underline underline-offset-4 text-center">{gameStatus}</div>
       <button onClick={handleRestart} className='flex flex-row justify-center border-2 border-slate-500 hover:bg-slate-400 w-full gap-1 p-1'>Restart
         <IconContext.Provider value={{ size: 23 }}>
           <VscDebugRestart></VscDebugRestart>
