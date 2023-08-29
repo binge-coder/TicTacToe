@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import { VscDebugRestart } from "react-icons/vsc";
+import { IconContext } from "react-icons";
 
 
 function Square({ value, onSquareClick }) {
@@ -11,7 +13,7 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, handleRestart }) {
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -53,6 +55,11 @@ function Board({ xIsNext, squares, onPlay }) {
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
       <div className="mb-2 underline underline-offset-4 text-center">{status}</div>
+      <button onClick={handleRestart} className='flex flex-row justify-center border-2 border-slate-500 hover:bg-slate-400 w-full gap-1 p-1'>Restart
+        <IconContext.Provider value={{ size: 23 }}>
+          <VscDebugRestart></VscDebugRestart>
+        </IconContext.Provider>
+      </button>
     </>
   );
 }
@@ -149,7 +156,7 @@ export default function Game() {
     }
     return (
       <li key={move}>
-        <button className="border border-black bg-[#b8c1ec] text-[#232946]  dark:hover:bg-slate-800 rounded-sm m-1 px-2 hover:bg-slate-400 shadow-lg dark:bg-transparent dark:text-white dark:border-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
+        <button className="border border-black bg-[#b8c1ec] text-[#232946]  dark:hover:bg-slate-400 rounded-sm m-1 px-2 hover:bg-slate-400 shadow-lg dark:bg-transparent dark:text-white dark:border-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
       </li>
     );
   });
@@ -159,24 +166,29 @@ export default function Game() {
     setDarkmode(prevDarkMode => !prevDarkMode)
   }
 
+  const restartGame = () => {
+    setCurrentMove(0);
+
+  };
+
   return (
     // <div className='flex flex-col h-screen border-2 border-green-500'>
-    <div className={`flex flex-col min-h-screen ${darkmode?'dark':''} bg-slate-400`}>
+    <div className={`flex flex-col min-h-screen ${darkmode ? 'dark' : ''} bg-slate-400`}>
 
-    <Navbar darkmode = {darkmode} toggleDarkMode = {toggleDarkMode}/>
-    <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row dark:bg-slate-800">
-      <div className="border-2 rounded-md w-50 mt-6 shadow-2xl border-black dark:border-slate-600">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+      <Navbar darkmode={darkmode} toggleDarkMode={toggleDarkMode} />
+      <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row dark:bg-slate-800">
+        <div className="border-2 rounded-md w-50 mt-6 shadow-2xl border-black dark:border-slate-600">
+          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} handleRestart={restartGame} />
+        </div>
+        <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3">
+          {/* game-history */}
+          <p className='font-bold text-center'>History</p>
+          <ol>{moves}</ol>
+        </div>
       </div>
-      <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3"> 
-      {/* game-history */}
-        <p className='font-bold text-center'>History</p>
-        <ol>{moves}</ol>
-      </div>
+      <Footer></Footer>
     </div>
-    <Footer></Footer>
-    </div>
-    
+
   );
 }
 
