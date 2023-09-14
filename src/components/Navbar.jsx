@@ -1,8 +1,5 @@
 import React from 'react'
 import darkModeLogo from '/dark-icon.svg'
-// import { RxReset } from "react-icons/fa";
-import { VscDebugRestart } from "react-icons/vsc";
-
 
 const Navbar = (props) => {
   return (
