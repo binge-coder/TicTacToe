@@ -46,9 +46,9 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
     <>
       <div className='font-bold text-center mt-2'>Play Here</div>
       <div className="grid grid-cols-3 gap-1 mx-5 my-2">
-      {sqRange.map((index) => (
-    <Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />
-  ))}
+        {sqRange.map((index) => (
+          <Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />
+        ))}
       </div>
       <div className="mb-2 underline underline-offset-4 text-center">{gameStatus}</div>
       <button onClick={handleRestart} className='flex flex-row justify-center border-2 border-slate-500 hover:bg-slate-400 w-full gap-1 p-1'>Restart
