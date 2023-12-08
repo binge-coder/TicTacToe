@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import { VscDebugRestart } from "react-icons/vsc";
 import { IconContext } from "react-icons";
 
-
 function Square({ value, onSquareClick }) {
   return (
     <button className="square border border-black text-lg font-bold h-12 w-12 p-0 text-center bg-[#b8c1ec] hover:border-4 active:bg-slate-500 dark:bg-slate-800 dark:border-white shadow-lg" onClick={onSquareClick}>
@@ -29,11 +28,6 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
 
   const winner = calculateWinner(squares);
   let gameStatus;
-  // if (winner) {
-  //   gameStatus = 'Winner: ' + winner;
-  // } else {
-  //   gameStatus = 'Next player: ' + (xIsNext ? 'X' : 'O');
-  // }
   if (winner) {
     gameStatus = 'Winner: ' + winner + ' (computer)';
   }
