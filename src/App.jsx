@@ -13,7 +13,7 @@ function Square({ value, onSquareClick, winningSquareBool }) {
 }
 
 function Board({ xIsNext, squares, onPlay, handleRestart }) {
-  const [gameStatus, setGameStatus] = useState('No winner yet');
+  const [gameStatus, setGameStatus] = useState('');
   const [winningSquares, setWinningSquares] = useState([]);
   function handleClick(i) {
     if (calculateWinner(squares).winner || squares[i]) {
@@ -33,10 +33,11 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
   // let gameStatus;
   useEffect(() => {
     if (winner) {
-      setGameStatus('Winner: ' + winner + ' (computer)');
+      setGameStatus('Winner: computer');
       setWinningSquares(winningCombination);
     } else {
-      setGameStatus('No winner yet');
+      setGameStatus('');
+      setWinningSquares([]);
     }
   }, [squares]);
   let sqRange = [0, 1, 2, 3, 4, 5, 6, 7, 8];
