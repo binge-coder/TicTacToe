@@ -5,8 +5,12 @@ import { VscDebugRestart } from "react-icons/vsc";
 import { IconContext } from "react-icons";
 
 function Square({ value, onSquareClick }) {
+  // const winningSquare = true;
+  // dark:bg-slate-800
+  const winningSquare = false;
+
   return (
-    <button className="square border border-black text-lg font-bold h-12 w-12 p-0 text-center bg-[#b8c1ec] hover:border-4 active:bg-slate-500 dark:bg-slate-800 dark:border-white shadow-lg" onClick={onSquareClick}>
+    <button className={`square border border-black text-lg font-bold h-12 w-12 p-0 text-center hover:border-4 active:bg-slate-500  dark:border-white shadow-lg ${winningSquare?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'}`} onClick={onSquareClick}>
       {value}
     </button>
   );
