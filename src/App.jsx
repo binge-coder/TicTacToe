@@ -80,13 +80,13 @@ export default function Game() {
 
   function findBestMove(squares) {
     let bestScore = -Infinity;
-    let bestMove = null;
-    let squaresCopy = [...squares];
-    for (let i = 0; i < squaresCopy.length; i++) {
-      if (squaresCopy[i] === null) {
-        squaresCopy[i] = 'O';
-        let score = minimax(squaresCopy, 0, -Infinity, Infinity, false);
-        squaresCopy[i] = null;
+    let bestMove;
+
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i] === null) {
+        squares[i] = 'O';
+        let score = minimax(squares, 0, -Infinity, Infinity, false);
+        squares[i] = null;
         if (score > bestScore) {
           bestScore = score;
           bestMove = i;
@@ -104,21 +104,19 @@ export default function Game() {
       return -10 + depth;
     } else if (winner.winner === 'O') {
       return 10 - depth;
-    } else if (winner.winner === null && winner.winningCombination.length === 0) {
-      return 0; // Return score for draw
     }
-    // if (squares.indexOf(null) === -1) {
-    //   return 0;
-    // }
-    const squaresCopy = squares.slice();
+    if (squares.indexOf(null) === -1) {
+      return 0;
+    }
+    // const squaresCopy = squares.slice();
     if (isMaximizing) {
       let maxScore = -Infinity;
 
       for (let i = 0; i < squares.length; i++) {
-        if (squaresCopy[i] === null) {
-          squaresCopy[i] = 'O';
-          const score = minimax(squaresCopy, depth + 1, alpha, beta, false);
-          squaresCopy[i] = null;
+        if (squares[i] === null) {
+          squares[i] = 'O';
+          const score = minimax(squares, depth + 1, alpha, beta, false);
+          squares[i] = null;
           maxScore = Math.max(maxScore, score);
           alpha = Math.max(alpha, score);
           if (beta <= alpha) {
@@ -130,10 +128,10 @@ export default function Game() {
     } else {
       let minScore = Infinity;
       for (let i = 0; i < squares.length; i++) {
-        if (squaresCopy[i] === null) {
-          squaresCopy[i] = 'X';
-          const score = minimax(squaresCopy, depth + 1, alpha, beta, true);
-          squaresCopy[i] = null;
+        if (squares[i] === null) {
+          squares[i] = 'X';
+          const score = minimax(squares, depth + 1, alpha, beta, true);
+          squares[i] = null;
           minScore = Math.min(minScore, score);
           beta = Math.min(beta, score);
           if (beta <= alpha) {
