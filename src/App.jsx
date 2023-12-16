@@ -45,6 +45,10 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
   return (
     <>
       <div className='font-bold text-center mt-2'>Play Here</div>
+      <ul className='mx-2 border-y-2 border-black dark:border-white'>
+        <li>Your mark &rarr; <strong>X</strong></li>
+        <li>Computer's mark &rarr; <strong>O</strong></li>
+      </ul>
       <div className="grid grid-cols-3 gap-1 mx-5 my-2">
         {sqRange.map((index) => (
           <Square 
