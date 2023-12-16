@@ -75,7 +75,7 @@ export default function Game() {
     for (let i = 0; i < squares.length; i++) {
       if (squares[i] === null) {
         squares[i] = 'O';
-        let score = minimax(squares, 0, false);
+        let score = minimax(squares, 0, -Infinity, Infinity, false);
         squares[i] = null;
         if (score > bestScore) {
           bestScore = score;
@@ -87,7 +87,8 @@ export default function Game() {
     return bestMove;
   }
 
-  function minimax(squares, depth, isMaximizing) {
+
+  function minimax(squares, depth, alpha, beta, isMaximizing) {
     const winner = calculateWinner(squares);
     if (winner === 'X') {
       return -10 + depth;
@@ -104,8 +105,13 @@ export default function Game() {
       for (let i = 0; i < squares.length; i++) {
         if (squares[i] === null) {
           squares[i] = 'O';
-          maxScore = Math.max(maxScore, minimax(squares, depth + 1, false));
+          const score = minimax(squares, depth + 1, alpha, beta, false);
           squares[i] = null;
+          maxScore = Math.max(maxScore, score);
+          alpha = Math.max(alpha, score);
+          if (beta <= alpha) {
+            break;
+          }
         }
       }
       return maxScore;
@@ -114,13 +120,19 @@ export default function Game() {
       for (let i = 0; i < squares.length; i++) {
         if (squares[i] === null) {
           squares[i] = 'X';
-          minScore = Math.min(minScore, minimax(squares, depth + 1, true));
+          const score = minimax(squares, depth + 1, alpha, beta, true);
           squares[i] = null;
+          minScore = Math.min(minScore, score);
+          beta = Math.min(beta, score);
+          if (beta <= alpha) {
+            break;
+          }
         }
       }
       return minScore;
     }
   }
+
 
   function handleComputerMove() {
     if (!xIsNext) {
