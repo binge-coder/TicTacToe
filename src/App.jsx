@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import { VscDebugRestart } from "react-icons/vsc";
 import { IconContext } from "react-icons";
 
-function Square({ value, onSquareClick, winningSquareBool, index }) {
+function Cell({ value, onCellClick, winningCellBool, index }) {
   const t = index === 1; // Top
   const l = index === 3; // Left
   const isCenter = index === 4; // Center
@@ -20,45 +20,45 @@ function Square({ value, onSquareClick, winningSquareBool, index }) {
 
 
   return (
-    <button className={`h-24 text-3xl font-bold text-center hover:border-4 hover:border-black active:bg-slate-500 dark:border-white shadow-lg dark:shadow-none ${winningSquareBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'} ${borderClass}`} onClick={onSquareClick}>
+    <button className={`h-24 text-3xl font-bold text-center hover:border-4 hover:border-black active:bg-slate-500 dark:border-white shadow-lg dark:shadow-none ${winningCellBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'} ${borderClass}`} onClick={onCellClick}>
       {value}
     </button>
   );
 }
 
 
-function Board({ xIsNext, squares, onPlay, handleRestart }) {
+function Board({ xIsNext, cells, onPlay, handleRestart }) {
   const [gameStatus, setGameStatus] = useState('');
-  const [winningSquares, setWinningSquares] = useState([]);
+  const [winningCells, setWinningCells] = useState([]);
   function handleClick(i) {
-    if (calculateWinner(squares).winner || squares[i]) {
+    if (calculateWinner(cells).winner || cells[i]) {
       return;
     }
-    const nextSquares = squares.slice();
+    const nextCells = [...cells];
     if (xIsNext) {
-      nextSquares[i] = 'X';
+      nextCells[i] = 'X';
     } else {
-      nextSquares[i] = 'O';
+      nextCells[i] = 'O';
     }
-    onPlay(nextSquares);
+    onPlay(nextCells);
   }
 
-  const result = calculateWinner(squares);
+  const result = calculateWinner(cells);
   const {winner, winningCombination} = result;
   useEffect(() => {
     if (winner) {
       setGameStatus('Winner: computer');
-      setWinningSquares(winningCombination);
+      setWinningCells(winningCombination);
     }
-    else if(!squares.includes(null)) {
-// all squares are filled and no winner so draw
+    else if(!cells.includes(null)) {
+// all cells are filled and no winner so draw
       setGameStatus('Draw!');
     } 
     else {
       setGameStatus('');
-      setWinningSquares([]);
+      setWinningCells([]);
     }
-  }, [squares]);
+  }, [cells]);
   let sqRange = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
@@ -69,11 +69,11 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
       <div className="grid grid-cols-3 m-6">
 
         {sqRange.map((index) => (
-          <Square 
+          <Cell 
           key={index} 
-          value={squares[index]} 
-          onSquareClick={() => handleClick(index)}
-          winningSquareBool={winningSquares.includes(index)}
+          value={cells[index]} 
+          onCellClick={() => handleClick(index)}
+          winningCellBool={winningCells.includes(index)}
           index={index}
           />
         ))}
@@ -89,57 +89,56 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
 }
 
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [pastMoves, setPastMoves] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
 
-  const currentSquares = history[currentMove];
+  const currentSquares = pastMoves[currentMove];
 
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
+  function handlePlay(nextCells) {
+    const nextHistory = [...pastMoves.slice(0, currentMove + 1), nextCells];
+    setPastMoves(nextHistory);
     setCurrentMove(nextHistory.length - 1);
     setXIsNext(!xIsNext);
   }
 
-  function findBestMove(squares) {
+  function findBestMove(cells) {
     let bestScore = -Infinity;
     let bestMove;
 
-    for (let i = 0; i < squares.length; i++) {
-      if (squares[i] === null) {
-        squares[i] = 'O';
-        let score = minimax(squares, 0, -Infinity, Infinity, false);
-        squares[i] = null;
+    for (let i = 0; i < cells.length; i++) {
+      if (cells[i] === null) {
+        cells[i] = 'O';
+        let score = minimax(cells, 0, -Infinity, Infinity, false);
+        cells[i] = null;
         if (score > bestScore) {
           bestScore = score;
           bestMove = i;
         }
       }
     }
-
     return bestMove;
   }
 
 
-  function minimax(squares, depth, alpha, beta, isMaximizing) {
-    const winner = calculateWinner(squares);
+  function minimax(cells, depth, alpha, beta, isMaximizing) {
+    const winner = calculateWinner(cells);
     if (winner.winner === 'X') {
       return -10 + depth;
     } else if (winner.winner === 'O') {
       return 10 - depth;
     }
-    if (squares.indexOf(null) === -1) {
+    if (cells.indexOf(null) === -1) {
       return 0;
     }
     if (isMaximizing) {
       let maxScore = -Infinity;
 
-      for (let i = 0; i < squares.length; i++) {
-        if (squares[i] === null) {
-          squares[i] = 'O';
-          const score = minimax(squares, depth + 1, alpha, beta, false);
-          squares[i] = null;
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i] === null) {
+          cells[i] = 'O';
+          const score = minimax(cells, depth + 1, alpha, beta, false);
+          cells[i] = null;
           maxScore = Math.max(maxScore, score);
           alpha = Math.max(alpha, score);
           if (beta <= alpha) {
@@ -150,11 +149,11 @@ export default function Game() {
       return maxScore;
     } else {
       let minScore = Infinity;
-      for (let i = 0; i < squares.length; i++) {
-        if (squares[i] === null) {
-          squares[i] = 'X';
-          const score = minimax(squares, depth + 1, alpha, beta, true);
-          squares[i] = null;
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i] === null) {
+          cells[i] = 'X';
+          const score = minimax(cells, depth + 1, alpha, beta, true);
+          cells[i] = null;
           minScore = Math.min(minScore, score);
           beta = Math.min(beta, score);
           if (beta <= alpha) {
@@ -172,7 +171,7 @@ export default function Game() {
       const currentSquaresCopy = [...currentSquares]
       const bestMove = findBestMove(currentSquaresCopy);
       currentSquaresCopy[bestMove] = 'O';
-      handlePlay(currentSquaresCopy); // these are basically the squares that are the latest version
+      handlePlay(currentSquaresCopy); // these are basically the cells that are the latest version
     }
   }
 
@@ -182,20 +181,6 @@ export default function Game() {
     }
   }, [xIsNext, currentSquares]);
 
-  // const moves = history.map((squares, move) => {
-  //   let description;
-  //   if (move > 0) {
-  //     description = 'Go to move #' + move;
-  //   } else {
-  //     description = 'Go to game start';
-  //   }
-    // return (
-    //   <li key={move}>
-    //     <button className="border border-black bg-[#b8c1ec] text-[#232946]  dark:hover:bg-slate-400 rounded-sm m-1 px-2 hover:bg-slate-400 shadow-lg dark:bg-transparent dark:text-white dark:border-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
-    //   </li>
-    // );
-  // });
-
   const [darkmode, setDarkmode] = useState(true);
   function toggleDarkMode() {
     setDarkmode(prevDarkMode => !prevDarkMode)
@@ -203,7 +188,6 @@ export default function Game() {
 
   const restartGame = () => {
     setCurrentMove(0);
-    // setHistory([Array(9).fill(null)]);
   };
 
 
@@ -213,12 +197,8 @@ export default function Game() {
       <Navbar darkmode={darkmode} toggleDarkMode={toggleDarkMode} />
       <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row dark:bg-slate-800">
         <div className="border-2 rounded-md w-96 mt-6 shadow-2xl border-black dark:border-slate-600">
-          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} handleRestart={restartGame} />
+          <Board xIsNext={xIsNext} cells={currentSquares} onPlay={handlePlay} handleRestart={restartGame} />
         </div>
-        {/* <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3">
-          <p className='font-bold text-center'>History</p>
-          <ol>{moves}</ol>
-        </div> */}
       </div>
       <Footer></Footer>
     </div>
@@ -226,7 +206,7 @@ export default function Game() {
   );
 }
 
-function calculateWinner(squares) {
+function calculateWinner(cells) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -239,8 +219,8 @@ function calculateWinner(squares) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {winner: squares[a], winningCombination: [a, b, c]};
+    if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+      return {winner: cells[a], winningCombination: [a, b, c]};
     }
   }
   return {winner: null, winningCombination: []};
