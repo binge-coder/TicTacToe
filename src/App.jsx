@@ -4,13 +4,37 @@ import Navbar from './components/Navbar';
 import { VscDebugRestart } from "react-icons/vsc";
 import { IconContext } from "react-icons";
 
-function Square({ value, onSquareClick, winningSquareBool }) {
+// function Square({ value, onSquareClick, winningSquareBool }) {
+//   return (
+
+//     <button className={`square border border-black text-3xl font-bold h-20 text-center hover:border-4 active:bg-slate-500  dark:border-white shadow-lg ${winningSquareBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'}`} onClick={onSquareClick}>
+//       {value}
+//     </button>
+//   );
+// }
+
+function Square({ value, onSquareClick, winningSquareBool, index }) {
+  const t = index === 1; // Top
+  const l = index === 3; // Left
+  const isCenter = index === 4; // Center
+  const r = index === 5; // Right
+  const b = index === 7; // Bottom
+
+  const borderClass = `
+  ${t ? 'border-l-4 border-r-4 ' : ''} 
+  ${l ? 'border-t-4 border-b-4' : ''} 
+  ${isCenter ? 'border-4' : ''} 
+  ${r ? 'border-t-4 border-b-4' : ''} 
+  ${b ? 'border-l-4 border-r-4' : ''}`;
+
+
   return (
-    <button className={`square border border-black text-lg font-bold h-12 w-12 p-0 text-center hover:border-4 active:bg-slate-500  dark:border-white shadow-lg ${winningSquareBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'}`} onClick={onSquareClick}>
+    <button className={`h-24 text-3xl font-bold text-center hover:border-4 hover:border-black active:bg-slate-500 dark:border-white shadow-lg dark:shadow-none ${winningSquareBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'} ${borderClass}`} onClick={onSquareClick}>
       {value}
     </button>
   );
 }
+
 
 function Board({ xIsNext, squares, onPlay, handleRestart }) {
   const [gameStatus, setGameStatus] = useState('');
@@ -30,12 +54,18 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
 
   const result = calculateWinner(squares);
   const {winner, winningCombination} = result;
-  // let gameStatus;
   useEffect(() => {
     if (winner) {
       setGameStatus('Winner: computer');
       setWinningSquares(winningCombination);
-    } else {
+    }
+    else if(!squares.includes(null)) {
+// all squares are filled and no winner so draw
+      setGameStatus('Draw!');
+
+
+    } 
+    else {
       setGameStatus('');
       setWinningSquares([]);
     }
@@ -44,22 +74,22 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
 
   return (
     <>
-      <div className='font-bold text-center mt-2'>Play Here</div>
-      <ul className='mx-2 border-y-2 border-black dark:border-white'>
-        <li>Your mark &rarr; <strong>X</strong></li>
-        <li>Computer's mark &rarr; <strong>O</strong></li>
-      </ul>
-      <div className="grid grid-cols-3 gap-1 mx-5 my-2">
+      <div className='font-bold text-xl text-center mt-2'>Play Here</div>
+      <p className='mx-2 border-2 text-center border-black dark:border-white' >Your mark &rarr; <strong>X</strong>, Computer's mark &rarr; <strong>O</strong></p>
+      {/* <div className="grid grid-cols-3 gap-1 mx-5 my-2"> */}
+      <div className="grid grid-cols-3 m-6">
+
         {sqRange.map((index) => (
           <Square 
           key={index} 
           value={squares[index]} 
           onSquareClick={() => handleClick(index)}
           winningSquareBool={winningSquares.includes(index)}
+          index={index}
           />
         ))}
       </div>
-      <div className="mb-2 underline underline-offset-4 text-center">{gameStatus}</div>
+      <div className="mb-2 underline underline-offset-4 text-center ">{gameStatus}</div>
       <button onClick={handleRestart} className='flex flex-row justify-center border-2 border-slate-500 hover:bg-slate-400 w-full gap-1 p-1'>Restart
         <IconContext.Provider value={{ size: 23 }}>
           <VscDebugRestart></VscDebugRestart>
@@ -185,8 +215,10 @@ export default function Game() {
 
   const restartGame = () => {
     setCurrentMove(0);
-
+    setHistory([Array(9).fill(null)]);
+    // setXIsNext(true);
   };
+
 
   return (
     // <div className='flex flex-col h-screen border-2 border-green-500'>
@@ -194,7 +226,7 @@ export default function Game() {
 
       <Navbar darkmode={darkmode} toggleDarkMode={toggleDarkMode} />
       <div className="bg-slate-300 flex flex-1 flex-col justify-evenly items-center gap-6 md:flex-row dark:bg-slate-800">
-        <div className="border-2 rounded-md w-50 mt-6 shadow-2xl border-black dark:border-slate-600">
+        <div className="border-2 rounded-md w-96 mt-6 shadow-2xl border-black dark:border-slate-600">
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} handleRestart={restartGame} />
         </div>
         <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3">
