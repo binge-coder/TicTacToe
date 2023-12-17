@@ -1,5 +1,4 @@
-- add highlight when someone wins feature
 - understand how the state space tree is getting generated?
 - understand the algorithm implemented using
-- remove history feature for less plag
 - add button to show player first vs cpu first
+- report is : 25% 
