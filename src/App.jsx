@@ -182,19 +182,19 @@ export default function Game() {
     }
   }, [xIsNext, currentSquares]);
 
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = 'Go to move #' + move;
-    } else {
-      description = 'Go to game start';
-    }
-    return (
-      <li key={move}>
-        <button className="border border-black bg-[#b8c1ec] text-[#232946]  dark:hover:bg-slate-400 rounded-sm m-1 px-2 hover:bg-slate-400 shadow-lg dark:bg-transparent dark:text-white dark:border-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
-      </li>
-    );
-  });
+  // const moves = history.map((squares, move) => {
+  //   let description;
+  //   if (move > 0) {
+  //     description = 'Go to move #' + move;
+  //   } else {
+  //     description = 'Go to game start';
+  //   }
+    // return (
+    //   <li key={move}>
+    //     <button className="border border-black bg-[#b8c1ec] text-[#232946]  dark:hover:bg-slate-400 rounded-sm m-1 px-2 hover:bg-slate-400 shadow-lg dark:bg-transparent dark:text-white dark:border-slate-400 " onClick={() => setCurrentMove(move)}>{description}</button>
+    //   </li>
+    // );
+  // });
 
   const [darkmode, setDarkmode] = useState(true);
   function toggleDarkMode() {
@@ -215,11 +215,10 @@ export default function Game() {
         <div className="border-2 rounded-md w-96 mt-6 shadow-2xl border-black dark:border-slate-600">
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} handleRestart={restartGame} />
         </div>
-        <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3">
-          {/* game-history */}
+        {/* <div className=" border-2 rounded-md shadow-2xl border-black dark:border-slate-600 h-100 pt-1 px-2 m-3">
           <p className='font-bold text-center'>History</p>
           <ol>{moves}</ol>
-        </div>
+        </div> */}
       </div>
       <Footer></Footer>
     </div>
