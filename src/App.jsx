@@ -18,14 +18,12 @@ function Cell({ value, onCellClick, winningCellBool, index }) {
   ${r ? 'border-t-4 border-b-4' : ''} 
   ${b ? 'border-l-4 border-r-4' : ''}`;
 
-
   return (
     <button className={`h-24 text-3xl font-bold text-center hover:border-4 hover:border-black active:bg-slate-500 dark:border-white shadow-lg dark:shadow-none ${winningCellBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'} ${borderClass}`} onClick={onCellClick}>
       {value}
     </button>
   );
 }
-
 
 function Board({ xIsNext, cells, onPlay, handleRestart }) {
   const [gameStatus, setGameStatus] = useState('');
@@ -50,8 +48,7 @@ function Board({ xIsNext, cells, onPlay, handleRestart }) {
       setGameStatus('Winner: computer');
       setWinningCells(winningCombination);
     }
-    else if(!cells.includes(null)) {
-// all cells are filled and no winner so draw
+    else if(!cells.includes(null)) { // all cells are filled and no winner, so draw
       setGameStatus('Draw!');
     } 
     else {
@@ -65,9 +62,7 @@ function Board({ xIsNext, cells, onPlay, handleRestart }) {
     <>
       <div className='font-bold text-xl text-center mt-2'>Play Here</div>
       <p className='mx-2 border-2 text-center border-black dark:border-white' >Your mark &rarr; <strong>X</strong>, Computer's mark &rarr; <strong>O</strong></p>
-      {/* <div className="grid grid-cols-3 gap-1 mx-5 my-2"> */}
       <div className="grid grid-cols-3 m-6">
-
         {sqRange.map((index) => (
           <Cell 
           key={index} 
@@ -92,9 +87,7 @@ export default function Game() {
   const [pastMoves, setPastMoves] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
-
   const currentSquares = pastMoves[currentMove];
-
   function handlePlay(nextCells) {
     const nextHistory = [...pastMoves.slice(0, currentMove + 1), nextCells];
     setPastMoves(nextHistory);
@@ -119,7 +112,6 @@ export default function Game() {
     }
     return bestMove;
   }
-
 
   function minimax(cells, depth, alpha, beta, isMaximizing) {
     const winner = calculateWinner(cells);
@@ -165,7 +157,6 @@ export default function Game() {
     }
   }
 
-
   function handleComputerMove() {
     if (!xIsNext) {
       const currentSquaresCopy = [...currentSquares]
@@ -190,7 +181,6 @@ export default function Game() {
     setCurrentMove(0);
   };
 
-
   return (
     <div className={`flex flex-col min-h-screen ${darkmode ? 'dark' : ''} bg-slate-400`}>
 
@@ -202,7 +192,6 @@ export default function Game() {
       </div>
       <Footer></Footer>
     </div>
-
   );
 }
 
