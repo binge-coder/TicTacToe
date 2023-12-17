@@ -4,15 +4,6 @@ import Navbar from './components/Navbar';
 import { VscDebugRestart } from "react-icons/vsc";
 import { IconContext } from "react-icons";
 
-// function Square({ value, onSquareClick, winningSquareBool }) {
-//   return (
-
-//     <button className={`square border border-black text-3xl font-bold h-20 text-center hover:border-4 active:bg-slate-500  dark:border-white shadow-lg ${winningSquareBool?'bg-green-500':'bg-[#b8c1ec] dark:bg-slate-800'}`} onClick={onSquareClick}>
-//       {value}
-//     </button>
-//   );
-// }
-
 function Square({ value, onSquareClick, winningSquareBool, index }) {
   const t = index === 1; // Top
   const l = index === 3; // Left
@@ -62,8 +53,6 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
     else if(!squares.includes(null)) {
 // all squares are filled and no winner so draw
       setGameStatus('Draw!');
-
-
     } 
     else {
       setGameStatus('');
@@ -102,7 +91,7 @@ function Board({ xIsNext, squares, onPlay, handleRestart }) {
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [xIsNext, setXIsNext] = useState(true); // Initialize with true for user's first move
+  const [xIsNext, setXIsNext] = useState(true);
 
   const currentSquares = history[currentMove];
 
@@ -110,7 +99,7 @@ export default function Game() {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
-    setXIsNext(!xIsNext); // Toggle turns after a move
+    setXIsNext(!xIsNext);
   }
 
   function findBestMove(squares) {
@@ -143,7 +132,6 @@ export default function Game() {
     if (squares.indexOf(null) === -1) {
       return 0;
     }
-    // const squaresCopy = squares.slice();
     if (isMaximizing) {
       let maxScore = -Infinity;
 
@@ -181,10 +169,10 @@ export default function Game() {
 
   function handleComputerMove() {
     if (!xIsNext) {
-      const bestMove = findBestMove(currentSquares.slice());
-      const nextSquares = currentSquares.slice();
-      nextSquares[bestMove] = 'O';
-      handlePlay(nextSquares);
+      const currentSquaresCopy = [...currentSquares]
+      const bestMove = findBestMove(currentSquaresCopy);
+      currentSquaresCopy[bestMove] = 'O';
+      handlePlay(currentSquaresCopy); // these are basically the squares that are the latest version
     }
   }
 
@@ -215,13 +203,11 @@ export default function Game() {
 
   const restartGame = () => {
     setCurrentMove(0);
-    setHistory([Array(9).fill(null)]);
-    // setXIsNext(true);
+    // setHistory([Array(9).fill(null)]);
   };
 
 
   return (
-    // <div className='flex flex-col h-screen border-2 border-green-500'>
     <div className={`flex flex-col min-h-screen ${darkmode ? 'dark' : ''} bg-slate-400`}>
 
       <Navbar darkmode={darkmode} toggleDarkMode={toggleDarkMode} />
