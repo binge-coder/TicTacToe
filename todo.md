@@ -1,4 +1,1 @@
-- understand how the state space tree is getting generated?
-- understand the algorithm implemented using
-- add button to show player first vs cpu first
-- report is : 25% 
+- all done

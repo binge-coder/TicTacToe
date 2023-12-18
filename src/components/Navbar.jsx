@@ -1,4 +1,3 @@
-// import React from 'react'
 import darkModeLogo from '/dark-icon.svg'
 
 const Navbar = (props) => {
