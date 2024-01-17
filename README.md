@@ -4,7 +4,7 @@
 - You can never win. The closest you can get is draw the match
 
 ## Technical details
-- Uses minimax algorithm 
+- ~~Uses minimax algorithm~~ Uses alpha beta pruning 
 - Made using:
     - reactjs
     - tailwind
